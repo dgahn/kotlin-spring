@@ -1,4 +1,5 @@
 plugins {
+    jacoco
     kotlin("jvm") version "1.5.31"
     kotlin("plugin.spring") version "1.5.31"
     kotlin("plugin.jpa") version "1.5.31"
@@ -48,12 +49,40 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
+jacoco {
+    toolVersion = "0.8.7"
+}
+
 tasks {
     withType<Test> {
         useJUnitPlatform()
+        finalizedBy(jacocoTestReport)
     }
     compileKotlin {
         dependsOn(formatKotlin)
         dependsOn(detekt)
+    }
+    jacocoTestReport {
+        reports {
+            html.required.set(true)
+            xml.required.set(false)
+            csv.required.set(false)
+        }
+        finalizedBy(jacocoTestCoverageVerification)
+    }
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                element = "SOURCEFILE"
+
+                limit {
+                    counter = "LINE"
+                    value = "COVEREDRATIO"
+                    minimum = (1.0).toBigDecimal()
+                }
+                excludes = listOf("me/dgahn/App.kt")
+            }
+        }
+        enabled = true
     }
 }

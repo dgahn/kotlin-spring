@@ -3,6 +3,7 @@ plugins {
     kotlin("plugin.spring") version "1.5.31"
     kotlin("plugin.jpa") version "1.5.31"
     kotlin("plugin.allopen") version "1.5.31"
+    kotlin("plugin.serialization") version "1.5.31"
     id("org.springframework.boot") version "2.5.5"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("io.gitlab.arturbosch.detekt") version "1.18.0"
@@ -26,6 +27,7 @@ noArg {
     annotation("javax.persistence.Entity")
     annotation("javax.persistence.MappedSuperclass")
     annotation("javax.persistence.Embeddable")
+    annotation("kotlinx.serialization.Serializable")
 }
 
 kotlinter {
@@ -40,6 +42,12 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("io.github.microutils:kotlin-logging-jvm:2.0.10")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+
 //    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

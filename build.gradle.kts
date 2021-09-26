@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     jacoco
     kotlin("jvm") version "1.5.31"
@@ -5,7 +7,7 @@ plugins {
     kotlin("plugin.jpa") version "1.5.31"
     kotlin("plugin.allopen") version "1.5.31"
     kotlin("plugin.serialization") version "1.5.31"
-    id("org.springframework.boot") version "2.5.5"
+    id("org.springframework.boot") version "2.5.4"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("io.gitlab.arturbosch.detekt") version "1.18.0"
     id("org.jmailen.kotlinter") version "3.6.0"
@@ -41,12 +43,15 @@ kotlinter {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("io.github.microutils:kotlin-logging-jvm:2.0.10")
+    implementation("org.springframework.boot:spring-boot-starter-web:2.5.4")
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.5.4")
+    implementation("com.h2database:h2:1.4.200")
+    runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.5.21")
 
-//    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.4")
+    testImplementation("io.kotest:kotest-assertions-core:4.6.3")
 }
 
 jacoco {
@@ -59,8 +64,10 @@ tasks {
         finalizedBy(jacocoTestReport)
     }
     compileKotlin {
-        dependsOn(formatKotlin)
         dependsOn(detekt)
+    }
+    withType<Detekt> {
+        dependsOn(formatKotlin)
     }
     jacocoTestReport {
         reports {

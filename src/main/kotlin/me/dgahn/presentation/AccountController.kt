@@ -17,5 +17,4 @@ class AccountController {
     fun signUp(@RequestBody request: SignUpRequestDto): ResponseEntity<SignUpResponseDto> {
         return ResponseEntity(SignUpResponseDto(request.id), HttpStatus.CREATED)
     }
-
 }

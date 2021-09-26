@@ -1,5 +1,6 @@
 package me.dgahn.presentation
 
+import me.dgahn.SpringTestSupport
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.http.HttpStatus

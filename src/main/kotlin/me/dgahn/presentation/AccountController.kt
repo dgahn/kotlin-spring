@@ -1,5 +1,6 @@
 package me.dgahn.presentation
 
+import me.dgahn.application.AccountService
 import me.dgahn.dto.SignUpRequestDto
 import me.dgahn.dto.SignUpResponseDto
 import org.springframework.http.HttpStatus
@@ -11,10 +12,13 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/accounts")
-class AccountController {
+class AccountController(
+    private val accountService: AccountService
+) {
 
     @PostMapping
     fun signUp(@RequestBody request: SignUpRequestDto): ResponseEntity<SignUpResponseDto> {
-        return ResponseEntity(SignUpResponseDto(request.id), HttpStatus.CREATED)
+        val account = accountService.signUp(request.toAccount())
+        return ResponseEntity(SignUpResponseDto(account.id), HttpStatus.CREATED)
     }
 }

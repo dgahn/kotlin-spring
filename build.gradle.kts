@@ -52,6 +52,7 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.4")
     testImplementation("io.kotest:kotest-assertions-core:4.6.3")
+    testImplementation("io.mockk:mockk:1.12.0")
 }
 
 jacoco {

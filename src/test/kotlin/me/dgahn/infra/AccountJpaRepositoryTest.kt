@@ -1,7 +1,7 @@
 package me.dgahn.infra
 
 import io.kotest.matchers.shouldBe
-import me.dgahn.domain.Account
+import me.dgahn.fixture.getAccount
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -18,9 +18,4 @@ class AccountJpaRepositoryTest(
         val findAccount = accountJpaRepository.findById(account.id)
         findAccount.get() shouldBe account
     }
-
-    private fun getAccount() = Account(
-        id = "test",
-        password = "1234"
-    )
 }
